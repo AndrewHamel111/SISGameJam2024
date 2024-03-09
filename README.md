@@ -1,3 +1,5 @@
+<p align="center"><img src="icon.png"/></p>
+
 # SISGameJam2024
 
 Internal Game Jam at Snowed In Studios. Built off the [Kenney FPS Starter Kit](https://github.com/KenneyNL/Starter-Kit-FPS?tab=readme-ov-file) in Godot.
@@ -19,8 +21,6 @@ Gun will be low-poly, likely a blaster model provided by Kenney.
 Start with free music, if there's time or if I need a break I might play with something like Soundation studio to quickly put together a lazy composition with loops to make it slightly less lazy than free music.
 
 The remainder of the content from sample project:
-
-<p align="center"><img src="icon.png"/></p>
 
 # Starter Kit FPS
 
