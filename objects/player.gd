@@ -52,6 +52,18 @@ func _ready():
 	
 	weapon = weapons[weapon_index] # Weapon must never be nil
 	initiate_change_weapon(weapon_index)
+	
+func _process(delta):
+	handle_controls(delta)
+	
+	# Rotation
+	
+	camera.rotation.z = lerp_angle(camera.rotation.z, -input_mouse.x * 25 * delta, delta * 5)	
+	
+	camera.rotation.x = lerp_angle(camera.rotation.x, rotation_target.x, delta * 25)
+	rotation.y = lerp_angle(rotation.y, rotation_target.y, delta * 25)
+	
+	container.position = lerp(container.position, container_offset - (get_applied_velocity(delta) / 30), delta * 10)
 
 func _physics_process(delta):
 	
@@ -61,25 +73,9 @@ func _physics_process(delta):
 	handle_gravity(delta)
 	
 	# Movement
-
-	var applied_velocity: Vector3
 	
-	movement_velocity = transform.basis * movement_velocity # Move forward
-	
-	applied_velocity = velocity.lerp(movement_velocity, delta * 10)
-	applied_velocity.y = -gravity
-	
-	velocity = applied_velocity
+	velocity = get_applied_velocity(delta)
 	move_and_slide()
-	
-	# Rotation
-	
-	camera.rotation.z = lerp_angle(camera.rotation.z, -input_mouse.x * 25 * delta, delta * 5)	
-	
-	camera.rotation.x = lerp_angle(camera.rotation.x, rotation_target.x, delta * 25)
-	rotation.y = lerp_angle(rotation.y, rotation_target.y, delta * 25)
-	
-	container.position = lerp(container.position, container_offset - (applied_velocity / 30), delta * 10)
 	
 	# Movement sound
 	
@@ -103,8 +99,16 @@ func _physics_process(delta):
 	
 	if position.y < -10:
 		get_tree().reload_current_scene()
-
-# Mouse movement
+		
+func get_applied_velocity(delta):
+	var applied_velocity: Vector3
+	
+	movement_velocity = transform.basis * movement_velocity # Move forward
+	
+	applied_velocity = velocity.lerp(movement_velocity, delta * 10)
+	applied_velocity.y = -gravity
+	
+	return applied_velocity
 
 func _input(event):
 	if event is InputEventMouseMotion and mouse_captured:
