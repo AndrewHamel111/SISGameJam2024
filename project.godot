@@ -107,6 +107,10 @@ weapon_toggle={
 ]
 }
 
+[physics]
+
+common/physics_ticks_per_second=144
+
 [rendering]
 
 anti_aliasing/quality/screen_space_aa=1
