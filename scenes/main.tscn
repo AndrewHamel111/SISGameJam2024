@@ -24,10 +24,10 @@ outline_color = Color(0, 0, 0, 0.470588)
 [node name="Main" type="Node3D" node_paths=PackedStringArray("spawn_points")]
 script = ExtResource("1_jokcp")
 spawn_curve = SubResource("Curve_gsl3p")
-spawn_curve_start_time = 30.0
+spawn_curve_start_time = 60.0
 spawn_curve_end_time = 300.0
-spawn_per_minute_start = 3.0
-spawn_per_minute_end = 10.0
+spawn_per_minute_start = 4.0
+spawn_per_minute_end = 20.0
 spawn_points = [NodePath("Enemy Spawners/EnemySpawner"), NodePath("Enemy Spawners/EnemySpawner2"), NodePath("Enemy Spawners/EnemySpawner3"), NodePath("Enemy Spawners/EnemySpawner4")]
 enemy_scene_path = "res://objects/enemy.tscn"
 
