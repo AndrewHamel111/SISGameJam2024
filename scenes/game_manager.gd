@@ -15,6 +15,18 @@ extends Node3D
 @onready var player: Player = get_tree().get_first_node_in_group("Player")
 @onready var enemy_scene: PackedScene = load(enemy_scene_path)
 
+# Index-picker
+var indices: Array[int]
+func get_next_index():
+	if indices.is_empty():
+		for n in range(spawn_points.size()):
+			indices.push_front(n)
+		
+		indices.shuffle()
+		
+	return indices.pop_back()
+#
+
 var total_time: float = 0
 var next_spawn: float = 0
 
@@ -41,5 +53,4 @@ func increment_time(delta):
 	next_spawn += delta
 	
 func trigger_spawns():
-	for spawn in spawn_points:
-		spawn.spawn_new(player, enemy_scene)
+	spawn_points[get_next_index()].spawn_new(player, enemy_scene)
