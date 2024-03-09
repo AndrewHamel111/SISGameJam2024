@@ -16,3 +16,5 @@ func spawn_new(player: Player, enemy_scene: PackedScene):
 	
 	instance.position = position
 	instance.player = player
+	
+	Audio.play_at("sounds/enemy_spawned1.wav,sounds/enemy_spawned2.wav,sounds/enemy_spawned3.wav,sounds/enemy_spawned4.wav,sounds/enemy_spawned5.wav", position)
