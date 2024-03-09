@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="Pikmin 5"
-config/tags=PackedStringArray("starterkit")
 run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 boot_splash/bg_color=Color(0.92549, 0.92549, 0.960784, 1)
@@ -113,4 +112,5 @@ common/physics_ticks_per_second=144
 
 [rendering]
 
+renderer/rendering_method="gl_compatibility"
 anti_aliasing/quality/screen_space_aa=1
