@@ -3,6 +3,7 @@ extends CharacterBody3D
 @export_subgroup("Properties")
 @export var movement_speed = 5
 @export var jump_strength = 8
+@export_range(0, 1) var mouse_sensitivity = 1.0
 
 @export_subgroup("Weapons")
 @export var weapons: Array[Weapon] = []
@@ -10,7 +11,7 @@ extends CharacterBody3D
 var weapon: Weapon
 var weapon_index := 0
 
-var mouse_sensitivity = 700
+const base_sensitivity = 700
 var gamepad_sensitivity := 0.075
 
 var mouse_captured := true
@@ -108,10 +109,10 @@ func _physics_process(delta):
 func _input(event):
 	if event is InputEventMouseMotion and mouse_captured:
 		
-		input_mouse = event.relative / mouse_sensitivity
+		input_mouse = event.relative / base_sensitivity
 		
-		rotation_target.y -= event.relative.x / mouse_sensitivity
-		rotation_target.x -= event.relative.y / mouse_sensitivity
+		rotation_target.y -= event.relative.x / base_sensitivity * mouse_sensitivity
+		rotation_target.x -= event.relative.y / base_sensitivity * mouse_sensitivity
 
 func handle_controls(_delta):
 	
