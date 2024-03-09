@@ -1,3 +1,4 @@
+class_name Enemy
 extends Node3D
 
 @export var player: Node3D

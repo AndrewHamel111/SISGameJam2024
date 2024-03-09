@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqq35ewryi8q2"]
+
+[ext_resource type="Script" path="res://objects/enemy_spawner.gd" id="1_vvmhy"]
+
+[node name="EnemySpawner" type="Node3D"]
+script = ExtResource("1_vvmhy")
+enemy_scene = "res://objects/enemy.tscn"
+spawns_per_minute = 1.0
