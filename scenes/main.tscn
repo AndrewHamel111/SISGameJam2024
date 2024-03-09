@@ -29,7 +29,7 @@ spawn_curve_end_time = 300.0
 spawn_per_minute_start = 4.0
 spawn_per_minute_end = 20.0
 spawn_points = [NodePath("Enemy Spawners/EnemySpawner"), NodePath("Enemy Spawners/EnemySpawner6"), NodePath("Enemy Spawners/EnemySpawner2"), NodePath("Enemy Spawners/EnemySpawner7"), NodePath("Enemy Spawners/EnemySpawner3"), NodePath("Enemy Spawners/EnemySpawner5"), NodePath("Enemy Spawners/EnemySpawner4")]
-enemy_scene_path = "res://objects/enemy.tscn"
+enemy_scene_path = "res://objects/enemy_flying.tscn"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_q8fpv")
