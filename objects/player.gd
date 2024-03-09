@@ -73,7 +73,7 @@ func _process(delta):
 	
 	# Update weapon position
 	
-	container.position = lerp(container.position, container_offset - (get_applied_velocity(get_interpolated_delta(delta)) / 30), delta * 10)
+	container.position = lerp(container.position, container_offset - (get_applied_velocity(delta) / 30), delta * 10)
 
 func _physics_process(delta):
 	
@@ -310,10 +310,6 @@ func change_weapon():
 	
 	raycast.target_position = Vector3(0, 0, -1) * weapon.max_distance
 	crosshair.texture = weapon.crosshair
-	
-func get_interpolated_delta(delta):
-	delta += time_since_last_physics
-	return delta
 
 func damage(amount):
 	
