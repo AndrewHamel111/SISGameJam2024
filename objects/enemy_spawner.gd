@@ -10,7 +10,7 @@ func _process(delta):
 	pass
 
 func spawn_new(player: Player, enemy_scene: PackedScene):
-	var instance := enemy_scene.instantiate() as Enemy
+	var instance := enemy_scene.instantiate() as EnemyFlying
 	
 	add_child(instance)
 	

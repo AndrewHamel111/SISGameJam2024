@@ -1,4 +1,4 @@
-class_name Enemy
+class_name EnemyFlying
 extends Node3D
 
 @export var player: Node3D
