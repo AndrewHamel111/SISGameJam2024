@@ -25,11 +25,13 @@ var health:int = 100
 var gravity := 0.0
 
 var previously_floored := false
+var time_since_last_physics := 0
 
 var jump_single := true
 var jump_double := true
 
 var container_offset = Vector3(1.2, -1.1, -2.75)
+var camera_offset: Vector3
 
 var tween:Tween
 
@@ -53,8 +55,14 @@ func _ready():
 	weapon = weapons[weapon_index] # Weapon must never be nil
 	initiate_change_weapon(weapon_index)
 	
+	camera_offset = camera.position - position
+	
 func _process(delta):
-	handle_controls(delta)
+	
+	time_since_last_physics += delta
+	
+	handle_look_input()
+	handle_move_input()
 	
 	# Rotation
 	
@@ -63,9 +71,13 @@ func _process(delta):
 	camera.rotation.x = lerp_angle(camera.rotation.x, rotation_target.x, delta * 25)
 	rotation.y = lerp_angle(rotation.y, rotation_target.y, delta * 25)
 	
-	container.position = lerp(container.position, container_offset - (get_applied_velocity(delta) / 30), delta * 10)
+	# Update weapon position
+	
+	container.position = lerp(container.position, container_offset - (get_applied_velocity(get_interpolated_delta(delta)) / 30), delta * 10)
 
 func _physics_process(delta):
+	
+	time_since_last_physics = 0
 	
 	# Handle functions
 	
@@ -121,7 +133,24 @@ func _input(event):
 func handle_controls(_delta):
 	
 	# Mouse capture
+	check_mouse_capture()
 	
+	# Movement
+	handle_move_input()
+	
+	# Rotation
+	handle_look_input()
+	
+	# Shooting
+	action_shoot()
+	
+	# Jumping
+	handle_jump_input()
+		
+	# Weapon switching
+	action_weapon_toggle()
+	
+func check_mouse_capture():
 	if Input.is_action_just_pressed("mouse_capture"):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		mouse_captured = true
@@ -132,41 +161,31 @@ func handle_controls(_delta):
 		
 		input_mouse = Vector2.ZERO
 	
-	# Movement
-	
-	var input := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	
-	movement_velocity = Vector3(input.x, 0, input.y).normalized() * movement_speed
-	
-	# Rotation
-	
+func handle_look_input():
 	var rotation_input := Input.get_vector("camera_right", "camera_left", "camera_down", "camera_up")
 	
 	rotation_target -= Vector3(-rotation_input.y, -rotation_input.x, 0).limit_length(1.0) * gamepad_sensitivity
 	rotation_target.x = clamp(rotation_target.x, deg_to_rad(-90), deg_to_rad(90))
-	
-	# Shooting
-	
-	action_shoot()
-	
-	# Jumping
-	
-	if Input.is_action_just_pressed("jump"):
-		
-		if jump_single or jump_double:
-			Audio.play("sounds/jump_a.ogg, sounds/jump_b.ogg, sounds/jump_c.ogg")
-		
-		if jump_double:
-			
-			gravity = -jump_strength
-			jump_double = false
-			
-		if(jump_single): action_jump()
-		
-	# Weapon switching
-	
-	action_weapon_toggle()
 
+func handle_jump_input():
+	if !Input.is_action_just_pressed("jump"):
+		return
+		
+	if jump_single or jump_double:
+		Audio.play("sounds/jump_a.ogg, sounds/jump_b.ogg, sounds/jump_c.ogg")
+	
+	if jump_double:
+		
+		gravity = -jump_strength
+		jump_double = false
+		
+	if(jump_single): action_jump()
+
+func handle_move_input():
+	var input := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	
+	movement_velocity = Vector3(input.x, 0, input.y).normalized() * movement_speed
+	
 # Handle gravity
 
 func handle_gravity(delta):
@@ -291,6 +310,10 @@ func change_weapon():
 	
 	raycast.target_position = Vector3(0, 0, -1) * weapon.max_distance
 	crosshair.texture = weapon.crosshair
+	
+func get_interpolated_delta(delta):
+	delta += time_since_last_physics
+	return delta
 
 func damage(amount):
 	
