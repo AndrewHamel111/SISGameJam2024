@@ -16,7 +16,7 @@ var health := 100
 var time := 0.0
 var destroyed := false
 var printed := false
-var ignore_collision := false
+var ignore_timer := 0.0
 
 func _ready():
 	pass
@@ -26,6 +26,8 @@ func _physics_process(delta):
 	var collision := move_and_collide(direction.normalized() * delta * move_speed)
 	
 	if ignore_collision:
+	if ignore_timer > 0:
+		ignore_timer -= delta
 		return
 	
 	if collision == null:
@@ -34,8 +36,7 @@ func _physics_process(delta):
 	var collider = collision.get_collider()
 	if collider.has_method("damage"):
 		collider.damage(attack_damage)
-		ignore_collision = true
-		ignore_timer.start()
+		ignore_timer = 0.05
 		knock_back()
 
 func _process(_delta):
@@ -64,6 +65,3 @@ func knock_back():
 
 func _update_target():
 	agent.target_position = player.position
-
-func _on_i_frame_timer_timeout():
-	ignore_collision = false
