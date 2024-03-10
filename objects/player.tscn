@@ -13,6 +13,8 @@ height = 1.0
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+collision_layer = 2
+collision_mask = 7
 script = ExtResource("1_ffboj")
 weapons = Array[Resource("res://scripts/weapon.gd")]([ExtResource("3_kr4p8"), ExtResource("2_6epbw")])
 
@@ -59,6 +61,7 @@ frame = 2
 [node name="RayCast" type="RayCast3D" parent="Head/Camera"]
 exclude_parent = false
 target_position = Vector3(0, 0, -10)
+collision_mask = 5
 collide_with_areas = true
 
 [node name="Shadow" type="Decal" parent="."]
