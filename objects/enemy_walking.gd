@@ -4,12 +4,11 @@ extends RigidBody3D
 @onready var agent: NavigationAgent3D = $NavigationAgent3D
 
 @export var mesh: Node3D
-@export var move_speed := 5.0
+@export var move_speed := 3.0
 @export var attack_damage := 1.0
-@export var ignore_timer: Timer
 
 const KNOCK_BACK_HEIGHT = 1
-const KNOCK_BACK_STRENGTH = 5.0
+const KNOCK_BACK_STRENGTH = 3.0
 
 var player: Node3D
 var health := 100
@@ -22,13 +21,14 @@ func _ready():
 	pass
 	
 func _physics_process(delta):
-	var direction := agent.get_next_path_position() - global_position
-	var collision := move_and_collide(direction.normalized() * delta * move_speed)
 	
-	if ignore_collision:
 	if ignore_timer > 0:
 		ignore_timer -= delta
 		return
+	
+	var direction := agent.get_next_path_position() - global_position
+	direction.y = 0
+	var collision := move_and_collide(direction.normalized() * delta * move_speed)
 	
 	if collision == null:
 		return
@@ -36,10 +36,13 @@ func _physics_process(delta):
 	var collider = collision.get_collider()
 	if collider.has_method("damage"):
 		collider.damage(attack_damage)
-		ignore_timer = 0.05
+		ignore_timer = 0.8
 		knock_back()
 
 func _process(_delta):
+	if ignore_timer > 0:
+		return
+		
 	var direction = (player.global_position - global_position).normalized()
 	mesh.look_at(player.position, Vector3.UP, true)  # Look at player
 
