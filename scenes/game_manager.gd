@@ -34,6 +34,8 @@ var next_spawn: float = 0
 func _ready():
 	if spawn_points.is_empty():
 		print_debug("ERROR: spawn_points in GameManager is empty!")
+		
+	trigger_spawns()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

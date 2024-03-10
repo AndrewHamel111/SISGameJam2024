@@ -10,11 +10,9 @@ func _process(delta):
 	pass
 
 func spawn_new(player: Player, enemy_scene: PackedScene):
-	var instance := enemy_scene.instantiate() as EnemyFlying
+	var instance := enemy_scene.instantiate() as EnemyWalking
 	
 	add_child(instance)
-	
-	instance.position = position
 	instance.player = player
 	
-	Audio.play_at("sounds/enemy_spawned1.wav,sounds/enemy_spawned2.wav,sounds/enemy_spawned3.wav,sounds/enemy_spawned4.wav,sounds/enemy_spawned5.wav", position)
+	Audio.play_at("sounds/enemy_spawned1.wav,sounds/enemy_spawned2.wav,sounds/enemy_spawned3.wav,sounds/enemy_spawned4.wav,sounds/enemy_spawned5.wav", global_position)
