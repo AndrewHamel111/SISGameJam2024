@@ -6,22 +6,18 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_58jld"]
 height = 1.37417
 
-[node name="EnemyWalking" type="RigidBody3D" node_paths=PackedStringArray("mesh", "ignore_timer")]
+[node name="EnemyWalking" type="RigidBody3D" node_paths=PackedStringArray("mesh")]
 collision_layer = 4
 collision_mask = 7
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 script = ExtResource("1_c7enn")
-mesh = NodePath("enemy-walking")
-ignore_timer = NodePath("IFrameTimer")
+mesh = NodePath("Node3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.645, 0)
 shape = SubResource("CapsuleShape3D_58jld")
-
-[node name="enemy-walking" parent="." instance=ExtResource("2_flcyw")]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
@@ -29,9 +25,9 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 wait_time = 0.1
 autostart = true
 
-[node name="IFrameTimer" type="Timer" parent="."]
-wait_time = 0.013
-one_shot = true
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="enemy-walking" parent="Node3D" instance=ExtResource("2_flcyw")]
+transform = Transform3D(-8.74228e-09, 0, -0.2, 0, 0.2, 0, 0.2, 0, -8.74228e-09, 0, 0, 0)
 
 [connection signal="timeout" from="TargetUpdateTimer" to="." method="_update_target"]
-[connection signal="timeout" from="IFrameTimer" to="." method="_on_i_frame_timer_timeout"]

@@ -41,8 +41,7 @@ func _physics_process(delta):
 
 func _process(_delta):
 	var direction = (player.global_position - global_position).normalized()
-	mesh.look_at(player.position + Vector3(0, 0.5, 0), Vector3.UP, true)  # Look at player
-	mesh.rotate_y(-90)
+	mesh.look_at(player.position, Vector3.UP, true)  # Look at player
 
 func damage(amount):
 	Audio.play("sounds/enemy_hurt.ogg")
