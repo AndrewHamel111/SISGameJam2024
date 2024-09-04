@@ -4,7 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://cwiquxlcioaj8" path="res://models/enemy-walking.glb" id="2_flcyw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_58jld"]
-height = 1.37417
+radius = 0.25
+height = 1.5
 
 [node name="EnemyWalking" type="RigidBody3D" node_paths=PackedStringArray("mesh")]
 collision_layer = 4
@@ -20,6 +21,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.645, 0)
 shape = SubResource("CapsuleShape3D_58jld")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+debug_enabled = true
 
 [node name="TargetUpdateTimer" type="Timer" parent="."]
 wait_time = 0.1
